@@ -1,4 +1,4 @@
-# Smart Assistant Using Together.a11
+# Smart Assistant Using Together AI
 
 ## Overview
 
