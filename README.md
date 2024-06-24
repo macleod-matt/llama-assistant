@@ -68,7 +68,7 @@ To use Together.ai for hosting the language model, follow these steps:
 Run the script using the following command:
 
 ```
-python smart_assistant.py
+python app.py
 ```
 
 ### Interaction
