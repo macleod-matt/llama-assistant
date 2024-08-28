@@ -10,6 +10,7 @@ from rich.console import Console
 import pyttsx3
 import sys
 import signal
+import torch
 
 def signal_handler(sig, frame):
     if sig == signal.SIGINT:
@@ -70,7 +71,11 @@ class SmartAssistant:
         Returns:
             str: The transcribed text.
         """
-        result = self.stt.transcribe(audio_np, fp16=True)  
+        if torch.cuda.is_available():
+            fp = True
+        else:
+            fp = False
+        result = self.stt.transcribe(audio_np, fp16=fp)  
         text = result["text"].strip()
         return text
 
@@ -196,7 +201,7 @@ if __name__ == "__main__":
                 response = assistant.ask_llm(text)
                 assistant.print_to_console(response)
                 #add this for now, read back enablement 
-                if((audio_np.size < 100000) and (dontReadBack not in response)):
+                if((audio_np.size < 1000) and (dontReadBack not in response)):
                     assistant.tts_thread(response)
                     talk_event.set()
             else:
