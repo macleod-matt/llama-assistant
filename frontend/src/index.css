@@ -1,0 +1,245 @@
+@import url('https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;500;600;700;800&display=swap');
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  color: #fff;
+  font-family: 'Open Sans', sans-serif;
+}
+
+.app {
+  background-color: #343541;
+  display: flex;
+}
+
+.side-bar {
+  background-color: #202123;
+  height: 100vh;
+  width: 244px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.main {
+  height: 100vh;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  text-align: center;
+}
+
+.jarvis-logo {
+  width: 100%;
+  object-fit: cover;
+  height: 250px;
+}
+
+.jarvis-top-logo {
+  border-radius: 50%;
+  height: 100px;
+}
+
+.top-logo-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+}
+
+button {
+  border: solid 0.5px #4ae1e9;
+  background-color: transparent;
+  border-radius: 5px;
+  padding: 10px;
+  margin: 10px;
+}
+
+nav {
+  border-top: solid 0.5px rgba(255, 255, 255, 0.5);
+  padding: 10px;
+  margin: 10px;
+}
+
+.history {
+  padding: 5px;
+  margin: 10px;
+  height: 100%;
+}
+
+.history li {
+  list-style-type: none;
+  padding: 10px;
+  cursor: pointer;
+  background-color: #343541;
+  display: flex;
+  flex-flow: column;
+  justify-content: space-between;
+  margin-bottom: 5px;
+}
+
+.info {
+  color: rgba(255, 255, 255, 0.5);
+  font-size: 11px;
+  padding: 10px;
+}
+
+.bottom-section {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.input-container {
+  position: relative;
+  width: 100%;
+  max-width: 60%;
+  margin: 0 auto;
+}
+
+.input-wrap {
+  background-color: rgba(255, 255, 255, 0.05);
+  padding: 12px 15px;
+  border-radius: 999999px;
+  box-shadow: rgba(0, 0, 0, 0.05) 0 54px 55px, rgba(0, 0, 0, 0.05) 0 -12px 30px,
+    rgba(0, 0, 0, 0.05) 0 4px 6px, rgba(0, 0, 0, 0.05) 0 12px 3px,
+    rgba(0, 0, 0, 0.05) 0 -3px 5px;
+  padding-right: 35px;
+}
+
+input {
+  font-size: 20px;
+  width: 100%;
+  background-color: transparent;
+  border: none;
+}
+
+input:focus {
+  outline: none;
+}
+
+#submit {
+  position: absolute;
+  bottom: 5px;
+  right: 0;
+  cursor: pointer;
+  padding-right: 10px;
+}
+
+.feed {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  width: 100%;
+  padding: 0;
+  max-width: 75%;
+  overflow: scroll;
+  padding: 30px;
+  height: 75%;
+  margin-bottom: auto;
+  gap: 10px;
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+.feed::-webkit-scrollbar {
+  display: none;
+}
+
+.feed li {
+  display: flex;
+  background-color: #343541;
+  padding: 20px 50px 20px 20px;
+  max-width: 100%;
+  box-sizing: border-box;
+  overflow-wrap: break-word;
+  word-wrap: break-word;
+}
+
+.feed .user-message {
+  display: flex;
+  background-color: #2f2f2f;
+  padding: 20px;
+  margin: 20px 0;
+  max-width: 50%;
+  border-radius: 30px;
+  margin-left: auto;
+  word-wrap: break-word;
+}
+
+.feed .jarvis-message {
+  display: flex;
+  background-color: #343541;
+  padding: 20px 50px 20px 20px;
+  margin: 20px 0;
+  max-width: 75%;
+  margin: 0 auto;
+}
+
+.feed li p {
+  color: rgba(255, 255, 255, 0.8);
+  font-size: 14px;
+  text-align: left;
+  padding: 0 10px;
+  max-width: 100%;
+}
+
+#loading {
+  width: 2rem;
+  height: 2rem;
+  border: 5px solid #f3f3f3;
+  border-top: 6px solid #4ae1e9;
+  border-radius: 100%;
+  margin: auto auto 20px;
+  display: none;
+  animation: spin 1s infinite linear;
+}
+
+#loading.display {
+  display: block;
+}
+
+.custom {
+  color: #4ae1e9;
+}
+
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@media screen and (max-width: 480px) {
+  .main h1 {
+    font-size: 14px;
+  }
+  nav p {
+    font-size: 12px;
+  }
+  .side-bar button {
+    font-size: 12px;
+  }
+  .info {
+    font-size: 9px;
+  }
+  .input-container {
+    max-width: 90%;
+  }
+  input {
+    font-size: 14px;
+  }
+  #submit {
+    bottom: 13px;
+  }
+}
