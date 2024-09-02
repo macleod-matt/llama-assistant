@@ -1,16 +1,19 @@
-import React, { useState, useEffect, useRef, FormEvent } from 'react';
+import React, { useState, FormEvent } from 'react';
+import Sidebar from './components/Sidebar/Sidebar';
+import { MessageList } from './components/MessageList/MessageList';
+import Form from './components/Form/Form';
 
-interface Message {
+export interface Message {
   role: string;
   content: string;
 }
 
-interface Chat {
+export interface Chat {
   title: string;
   messages: Message[];
 }
 
-type Chats = Chat[];
+export type Chats = Chat[];
 
 const App: React.FC = () => {
   const fakeChats: Chats = [
@@ -57,40 +60,20 @@ const App: React.FC = () => {
   ];
   const [value, setValue] = useState<string>('');
   const [messages, setMessages] = useState<Message[]>(fakeChats[1].messages);
-  const [previousChats, setPreviousChats] = useState<Chat[]>(fakeChats);
+  const [previousChats, setPreviousChats] = useState<Chats>(fakeChats);
   const [currentChat, setCurrentChat] = useState<Chat>(fakeChats[1]);
 
   const [currentChatTitle, setCurrentChatTitle] = useState<string | null>(
     fakeChats[0].title
   );
-  const loader = document.querySelector<HTMLDivElement>('#loading');
 
   // update input on change
-  const onInput = (e: React.ChangeEvent<HTMLInputElement>) =>
+  const onInputChange = (e: React.ChangeEvent<HTMLInputElement>) =>
     setValue(e.target.value);
 
   // clear input after submit
   const onClear = () => {
     setValue('');
-  };
-
-  // showing loading
-  function displayLoading() {
-    if (loader) loader.classList.add('display');
-  }
-
-  // hiding loading
-  function hideLoading() {
-    if (loader) loader.classList.remove('display');
-  }
-
-  // always scroll to the bottom/latest message
-  const AlwaysScrollToBottom: React.FC = () => {
-    const elementRef = useRef<HTMLDivElement>(null);
-    useEffect(() => {
-      if (elementRef.current) elementRef.current.scrollIntoView();
-    });
-    return <div ref={elementRef} />;
   };
 
   const createNewChat = () => {
@@ -103,6 +86,8 @@ const App: React.FC = () => {
     setCurrentChat(chat);
     setMessages(chat.messages);
   };
+
+  // TODO: Create useEffect that calls getMessages everytime you submit the form
 
   const getMessages = async () => {
     // const options = {
@@ -141,7 +126,6 @@ const App: React.FC = () => {
   const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (value.trim()) {
-      console.log('Messages are ', messages);
       setMessages((messages) => [
         ...messages,
         {
@@ -156,66 +140,21 @@ const App: React.FC = () => {
 
   return (
     <div className='app'>
-      <section className='side-bar'>
-        <img src='/jarvis-logo2.jpg' className='jarvis-logo' />
-        <button onClick={createNewChat}>+ New Chat</button>
-        <ul className='history'>
-          {previousChats?.map((chat, index) => (
-            <li key={index} onClick={() => handleChatClick(chat)}>
-              {chat.title}
-            </li>
-          ))}
-        </ul>
-      </section>
+      <Sidebar
+        currentChat={currentChat}
+        createNewChat={createNewChat}
+        previousChats={previousChats}
+        handleChatClick={handleChatClick}
+      />
       <section className='main'>
         <img src='/jarvis-logo.png' className='jarvis-top-logo' />
-        <ul className='feed'>
-          {messages.map((chatMessage, index) => (
-            <li
-              key={index}
-              className={
-                chatMessage.role === 'user' ? 'user-message' : 'jarvis-message'
-              }
-            >
-              {chatMessage.role === 'jarvis' && <p className='role'>Jarvis:</p>}
-              <p>{chatMessage.content}</p>
-            </li>
-          ))}
-          <AlwaysScrollToBottom />
-        </ul>
-        <div className='bottom-section'>
-          <form
-            className='input-container'
-            onSubmit={handleSubmit}
-            onKeyDown={handleKeyDown}
-          >
-            <div className='input-wrap'>
-              <input id='inputId' value={value} onChange={onInput} />
-            </div>
-            <div id='submit'>
-              <svg
-                xmlns='http://www.w3.org/2000/svg'
-                width='32'
-                height='32'
-                fill='none'
-                viewBox='0 0 32 32'
-                className='submit-icon'
-              >
-                <path
-                  fill='currentColor'
-                  fillRule='evenodd'
-                  d='M15.192 8.906a1.143 1.143 0 0 1 1.616 0l5.143 5.143a1.143 1.143 0 0 1-1.616 1.616l-3.192-3.192v9.813a1.143 1.143 0 0 1-2.286 0v-9.813l-3.192 3.192a1.143 1.143 0 1 1-1.616-1.616z'
-                  clipRule='evenodd'
-                ></path>
-              </svg>
-            </div>
-          </form>
-          <p className='info'>
-            Lorem ipsum dolor, sit amet consectetur adipisicing elit.
-            Consectetur accusantium libero dicta quas magnam voluptates soluta
-            maxime corporis! Eius, asperiores?
-          </p>
-        </div>
+        <MessageList messages={messages} />
+        <Form
+          onSubmit={handleSubmit}
+          onKeyDown={handleKeyDown}
+          value={value}
+          onChange={onInputChange}
+        />
       </section>
     </div>
   );

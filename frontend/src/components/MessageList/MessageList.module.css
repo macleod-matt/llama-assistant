@@ -1,0 +1,55 @@
+.feed {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  width: 100%;
+  padding: 0;
+  max-width: 75%;
+  overflow: scroll;
+  padding: 30px;
+  height: 75%;
+  gap: var(--gap-xx-large);
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+.feed::-webkit-scrollbar {
+  display: none;
+}
+
+.feed li {
+  display: flex;
+  max-width: 100%;
+  box-sizing: border-box;
+  overflow-wrap: break-word;
+  word-wrap: break-word;
+}
+
+.feed .userMessage {
+  display: flex;
+  background-color: var(--secondary-color);
+  padding: var(--padding-medium) var(--padding-large);
+  max-width: 50%;
+  border-radius: 30px;
+  margin-left: auto;
+  word-wrap: break-word;
+}
+
+.feed .jarvisMessage {
+  display: flex;
+  background-color: #343541;
+  max-width: 75%;
+  margin: 0 auto;
+}
+
+.feed li p {
+  color: var(--text-color);
+  font-size: var(--font-size-medium);
+  text-align: left;
+  max-width: 100%;
+}
+
+.jarvisLabel {
+  font-weight: bold;
+  margin-right: var(--padding-small);
+}

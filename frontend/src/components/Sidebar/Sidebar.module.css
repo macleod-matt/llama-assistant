@@ -1,0 +1,32 @@
+.sideBar {
+  background-color: var(--secondary-color);
+  height: 100vh;
+  width: 275px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: var(--gap-large);
+  padding: var(--padding-small);
+}
+
+.chatHistory {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  gap: var(--gap-small);
+}
+
+.chatHistory li {
+  font-size: var(--font-size-small);
+  list-style-type: none;
+  padding: var(--padding-small) var(--padding-medium);
+  border-radius: var(--border-radius-pill);
+  cursor: pointer;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+}
+
+.currentChat {
+  background-color: var(--primary-color);
+}

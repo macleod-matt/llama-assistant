@@ -1,5 +1,33 @@
 @import url('https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;500;600;700;800&display=swap');
 
+:root {
+  --accent-color: #4ae1e9;
+  --primary-color: #343541;
+  --secondary-color: #202123;
+  --text-color: #ffffffcc;
+  --box-shadow: 1px 1px 7px 2px rgba(0, 0, 0, 0.2);
+  --white-color: #fdfcff;
+  --font-size-x-small: 10px;
+  --font-size-small: 14px;
+  --font-size-medium: 16px;
+  --font-size-large: 22px;
+  --font-size-x-large: 26px;
+  --border-radius-normal: 12px;
+  --border-radius-pill: 999px;
+  --gap-x-small: 5px;
+  --gap-small: 10px;
+  --gap-medium: 15px;
+  --gap-large: 20px;
+  --gap-x-large: 30px;
+  --gap-xx-large: 40px;
+  --primary-font: 'Open Sans', sans-serif;
+  --padding-x-small: 5px;
+  --padding-small: 10px;
+  --padding-medium: 15px;
+  --padding-large: 20px;
+  --padding-x-large: 30px;
+}
+
 * {
   box-sizing: border-box;
   margin: 0;
@@ -7,22 +35,13 @@
 }
 
 body {
-  color: #fff;
-  font-family: 'Open Sans', sans-serif;
+  color: var(--white-color);
+  font-family: var(--primary-font);
 }
 
 .app {
-  background-color: #343541;
+  background-color: var(--primary-color);
   display: flex;
-}
-
-.side-bar {
-  background-color: #202123;
-  height: 100vh;
-  width: 244px;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
 }
 
 .main {
@@ -53,145 +72,6 @@ body {
   gap: 8px;
 }
 
-button {
-  border: solid 0.5px #4ae1e9;
-  background-color: transparent;
-  border-radius: 5px;
-  padding: 10px;
-  margin: 10px;
-}
-
-nav {
-  border-top: solid 0.5px rgba(255, 255, 255, 0.5);
-  padding: 10px;
-  margin: 10px;
-}
-
-.history {
-  padding: 5px;
-  margin: 10px;
-  height: 100%;
-}
-
-.history li {
-  list-style-type: none;
-  padding: 10px;
-  cursor: pointer;
-  background-color: #343541;
-  display: flex;
-  flex-flow: column;
-  justify-content: space-between;
-  margin-bottom: 5px;
-}
-
-.info {
-  color: rgba(255, 255, 255, 0.5);
-  font-size: 11px;
-  padding: 10px;
-}
-
-.bottom-section {
-  width: 100%;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-}
-
-.input-container {
-  position: relative;
-  width: 100%;
-  max-width: 60%;
-  margin: 0 auto;
-}
-
-.input-wrap {
-  background-color: rgba(255, 255, 255, 0.05);
-  padding: 12px 15px;
-  border-radius: 999999px;
-  box-shadow: rgba(0, 0, 0, 0.05) 0 54px 55px, rgba(0, 0, 0, 0.05) 0 -12px 30px,
-    rgba(0, 0, 0, 0.05) 0 4px 6px, rgba(0, 0, 0, 0.05) 0 12px 3px,
-    rgba(0, 0, 0, 0.05) 0 -3px 5px;
-  padding-right: 35px;
-}
-
-input {
-  font-size: 20px;
-  width: 100%;
-  background-color: transparent;
-  border: none;
-}
-
-input:focus {
-  outline: none;
-}
-
-#submit {
-  position: absolute;
-  bottom: 5px;
-  right: 0;
-  cursor: pointer;
-  padding-right: 10px;
-}
-
-.feed {
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-start;
-  width: 100%;
-  padding: 0;
-  max-width: 75%;
-  overflow: scroll;
-  padding: 30px;
-  height: 75%;
-  margin-bottom: auto;
-  gap: 10px;
-  -ms-overflow-style: none;
-  scrollbar-width: none;
-}
-
-.feed::-webkit-scrollbar {
-  display: none;
-}
-
-.feed li {
-  display: flex;
-  background-color: #343541;
-  padding: 20px 50px 20px 20px;
-  max-width: 100%;
-  box-sizing: border-box;
-  overflow-wrap: break-word;
-  word-wrap: break-word;
-}
-
-.feed .user-message {
-  display: flex;
-  background-color: #2f2f2f;
-  padding: 20px;
-  margin: 20px 0;
-  max-width: 50%;
-  border-radius: 30px;
-  margin-left: auto;
-  word-wrap: break-word;
-}
-
-.feed .jarvis-message {
-  display: flex;
-  background-color: #343541;
-  padding: 20px 50px 20px 20px;
-  margin: 20px 0;
-  max-width: 75%;
-  margin: 0 auto;
-}
-
-.feed li p {
-  color: rgba(255, 255, 255, 0.8);
-  font-size: 14px;
-  text-align: left;
-  padding: 0 10px;
-  max-width: 100%;
-}
-
 #loading {
   width: 2rem;
   height: 2rem;
@@ -207,10 +87,6 @@ input:focus {
   display: block;
 }
 
-.custom {
-  color: #4ae1e9;
-}
-
 @keyframes spin {
   from {
     transform: rotate(0deg);
@@ -220,6 +96,7 @@ input:focus {
   }
 }
 
+/* TODO: Add media queries to css modules */
 @media screen and (max-width: 480px) {
   .main h1 {
     font-size: 14px;

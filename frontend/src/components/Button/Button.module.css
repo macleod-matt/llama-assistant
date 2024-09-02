@@ -1,0 +1,15 @@
+.button {
+  border: solid 0.5px var(--accent-color);
+  background: transparent;
+  color: var(--white-color);
+  font-size: var(--font-size-medium);
+  border-radius: var(--border-radius-pill);
+  padding: var(--padding-small);
+  cursor: pointer;
+  width: 100%;
+}
+
+.button:hover {
+  background: var(--accent-color);
+  color: var(--secondary-color);
+}
