@@ -159,6 +159,9 @@ input:focus {
   background-color: #343541;
   padding: 20px 50px 20px 20px;
   max-width: 100%;
+  box-sizing: border-box;
+  overflow-wrap: break-word;
+  word-wrap: break-word;
 }
 
 .feed .user-message {
@@ -169,6 +172,7 @@ input:focus {
   max-width: 50%;
   border-radius: 30px;
   margin-left: auto;
+  word-wrap: break-word;
 }
 
 .feed .jarvis-message {
@@ -180,21 +184,12 @@ input:focus {
   margin: 0 auto;
 }
 
-.feed p {
+.feed li p {
   color: rgba(255, 255, 255, 0.8);
   font-size: 14px;
   text-align: left;
   padding: 0 10px;
-}
-
-.feed p:first-child {
-  text-transform: capitalize;
-  font-weight: bold;
-  white-space: nowrap;
-}
-
-.feed p .role {
-  max-width: 100px;
+  max-width: 100%;
 }
 
 #loading {

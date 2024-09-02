@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef, FormEvent } from 'react';
 
 interface Message {
   role: string;
@@ -13,11 +13,6 @@ interface Chat {
 type Chats = Chat[];
 
 const App: React.FC = () => {
-  const fakeMessages: Message = {
-    role: 'user',
-    content: 'What is the worlds tallest building?',
-  };
-
   const fakeChats: Chats = [
     {
       title: 'Worlds Tallest Building',
@@ -60,9 +55,11 @@ const App: React.FC = () => {
       ],
     },
   ];
-  const [value, setValue] = useState<string>(' ');
-  const [message, setMessage] = useState<Message | null>(fakeMessages);
+  const [value, setValue] = useState<string>('');
+  const [messages, setMessages] = useState<Message[]>(fakeChats[1].messages);
   const [previousChats, setPreviousChats] = useState<Chat[]>(fakeChats);
+  const [currentChat, setCurrentChat] = useState<Chat>(fakeChats[1]);
+
   const [currentChatTitle, setCurrentChatTitle] = useState<string | null>(
     fakeChats[0].title
   );
@@ -74,9 +71,7 @@ const App: React.FC = () => {
 
   // clear input after submit
   const onClear = () => {
-    setTimeout(() => {
-      setValue(' ');
-    }, 1000);
+    setValue('');
   };
 
   // showing loading
@@ -99,41 +94,42 @@ const App: React.FC = () => {
   };
 
   const createNewChat = () => {
-    setMessage(null);
+    setMessages([]);
     setValue('');
     setCurrentChatTitle(null);
   };
 
-  const handleClick = (uniqueTitle: string) => {
-    setCurrentChatTitle(uniqueTitle);
-    setMessage(null);
+  const handleChatClick = (chat: Chat) => {
+    setCurrentChat(chat);
+    setMessages(chat.messages);
   };
 
   const getMessages = async () => {
-    const options = {
-      method: 'POST',
-      body: JSON.stringify({
-        message: value,
-      }),
-      headers: {
-        'Content-Type': 'application/json',
-      },
-    };
-    try {
-      displayLoading();
-      const response = await fetch('/chatgpt-clone-react', options);
-      const data = await response.json();
-      if (data.choices && data.choices.length > 0) {
-        setMessage(data.choices[0].message);
-      } else {
-        console.error(
-          'Invalid response data: choices array is empty or undefined'
-        );
-      }
-    } catch (error) {
-      console.error(error);
-    }
-    hideLoading();
+    // const options = {
+    //   method: 'POST',
+    //   body: JSON.stringify({
+    //     message: value,
+    //   }),
+    //   headers: {
+    //     'Content-Type': 'application/json',
+    //   },
+    // };
+    // try {
+    //   displayLoading();
+    //   const response = await fetch('/chatgpt-clone-react', options);
+    //   const data = await response.json();
+    //   if (data.choices && data.choices.length > 0) {
+    //     setMessages(data.choices[0].message);
+    //   } else {
+    //     console.error(
+    //       'Invalid response data: choices array is empty or undefined'
+    //     );
+    //   }
+    // } catch (error) {
+    //   console.error(error);
+    // }
+    // hideLoading();
+    console.log('Fetch messages from server');
   };
 
   const handleKeyDown = (e: React.KeyboardEvent) => {
@@ -142,37 +138,21 @@ const App: React.FC = () => {
     }
   };
 
-  // run this with whatever we get back from the API
-  useEffect(() => {
-    console.log({ currentTitle: currentChatTitle, value, message });
-    if (!currentChatTitle && value && message) {
-      setCurrentChatTitle(value);
-    }
-    if (currentChatTitle && value && message) {
-      setPreviousChats((prevChats) => [
-        ...prevChats,
-        // {
-        //   title: currentTitle,
-        //   role: 'user',
-        //   content: value,
-        // },
-        // {
-        //   title: currentTitle,
-        //   role: 'Jarvis',
-        //   content: message.content,
-        // },
+  const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    if (value.trim()) {
+      console.log('Messages are ', messages);
+      setMessages((messages) => [
+        ...messages,
+        {
+          role: 'user',
+          content: value,
+        },
       ]);
+      getMessages();
+      onClear();
     }
-    onClear();
-  }, [message, currentChatTitle, value]);
-
-  const currentChat = previousChats.filter(
-    (previousChat) => previousChat.title === currentChatTitle
-  );
-  const uniqueTitles = Array.from(
-    new Set(previousChats.map((previousChat) => previousChat.title))
-  );
-  console.log(uniqueTitles);
+  };
 
   return (
     <div className='app'>
@@ -180,9 +160,9 @@ const App: React.FC = () => {
         <img src='/jarvis-logo2.jpg' className='jarvis-logo' />
         <button onClick={createNewChat}>+ New Chat</button>
         <ul className='history'>
-          {uniqueTitles?.map((uniqueTitle, index) => (
-            <li key={index} onClick={() => handleClick(uniqueTitle)}>
-              {uniqueTitle}
+          {previousChats?.map((chat, index) => (
+            <li key={index} onClick={() => handleChatClick(chat)}>
+              {chat.title}
             </li>
           ))}
         </ul>
@@ -190,27 +170,29 @@ const App: React.FC = () => {
       <section className='main'>
         <img src='/jarvis-logo.png' className='jarvis-top-logo' />
         <ul className='feed'>
-          {fakeChats[0].messages.map((chatMessage, index) => (
+          {messages.map((chatMessage, index) => (
             <li
               key={index}
               className={
                 chatMessage.role === 'user' ? 'user-message' : 'jarvis-message'
               }
             >
-              {chatMessage.role === 'jarvis' && (
-                <p className='role'>Jarvis :</p>
-              )}
+              {chatMessage.role === 'jarvis' && <p className='role'>Jarvis:</p>}
               <p>{chatMessage.content}</p>
             </li>
           ))}
           <AlwaysScrollToBottom />
         </ul>
         <div className='bottom-section'>
-          <div className='input-container' onKeyDown={handleKeyDown}>
+          <form
+            className='input-container'
+            onSubmit={handleSubmit}
+            onKeyDown={handleKeyDown}
+          >
             <div className='input-wrap'>
               <input id='inputId' value={value} onChange={onInput} />
             </div>
-            <div id='submit' onClick={getMessages}>
+            <div id='submit'>
               <svg
                 xmlns='http://www.w3.org/2000/svg'
                 width='32'
@@ -221,13 +203,13 @@ const App: React.FC = () => {
               >
                 <path
                   fill='currentColor'
-                  fill-rule='evenodd'
+                  fillRule='evenodd'
                   d='M15.192 8.906a1.143 1.143 0 0 1 1.616 0l5.143 5.143a1.143 1.143 0 0 1-1.616 1.616l-3.192-3.192v9.813a1.143 1.143 0 0 1-2.286 0v-9.813l-3.192 3.192a1.143 1.143 0 1 1-1.616-1.616z'
-                  clip-rule='evenodd'
+                  clipRule='evenodd'
                 ></path>
               </svg>
             </div>
-          </div>
+          </form>
           <p className='info'>
             Lorem ipsum dolor, sit amet consectetur adipisicing elit.
             Consectetur accusantium libero dicta quas magnam voluptates soluta
