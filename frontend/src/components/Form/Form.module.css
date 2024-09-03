@@ -41,6 +41,9 @@ input:focus {
 .microphone {
   margin-left: var(--padding-medium);
   cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .info {

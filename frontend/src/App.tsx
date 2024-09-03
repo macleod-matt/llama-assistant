@@ -2,6 +2,8 @@ import React, { useState, FormEvent } from 'react';
 import Sidebar from './components/Sidebar/Sidebar';
 import { MessageList } from './components/MessageList/MessageList';
 import Form from './components/Form/Form';
+import Overlay from './components/Overlay/Overlay';
+import { JarvisLogo } from './components/JarvisLogo/JarvisLogo';
 
 export interface Message {
   role: string;
@@ -62,7 +64,7 @@ const App: React.FC = () => {
   const [messages, setMessages] = useState<Message[]>(fakeChats[1].messages);
   const [previousChats, setPreviousChats] = useState<Chats>(fakeChats);
   const [currentChat, setCurrentChat] = useState<Chat>(fakeChats[1]);
-
+  const [showOverlay, setShowOverlay] = useState<boolean>(false);
   const [currentChatTitle, setCurrentChatTitle] = useState<string | null>(
     fakeChats[0].title
   );
@@ -100,8 +102,8 @@ const App: React.FC = () => {
     //   },
     // };
     // try {
-    //   displayLoading();
-    //   const response = await fetch('/chatgpt-clone-react', options);
+    //   // TODO: add loading state here
+    //   const response = await fetch('/get-response', options);
     //   const data = await response.json();
     //   if (data.choices && data.choices.length > 0) {
     //     setMessages(data.choices[0].message);
@@ -113,7 +115,7 @@ const App: React.FC = () => {
     // } catch (error) {
     //   console.error(error);
     // }
-    // hideLoading();
+    // TODO: remove loading state here
     console.log('Fetch messages from server');
   };
 
@@ -138,8 +140,16 @@ const App: React.FC = () => {
     }
   };
 
+  const handleOverlayClick = (event: React.MouseEvent<HTMLDivElement>) => {
+    setShowOverlay(!showOverlay);
+  };
+
   return (
     <div className='app'>
+      <Overlay showOverlay={showOverlay} setShowOverlay={setShowOverlay}>
+        {/* <JarvisLogo /> */}
+        <img src='/jarvis-logo.png' />
+      </Overlay>
       <Sidebar
         currentChat={currentChat}
         createNewChat={createNewChat}
@@ -154,6 +164,7 @@ const App: React.FC = () => {
           onKeyDown={handleKeyDown}
           value={value}
           onChange={onInputChange}
+          onMicrophoneClick={handleOverlayClick}
         />
       </section>
     </div>

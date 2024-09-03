@@ -1,5 +1,5 @@
 @import url('https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;500;600;700;800&display=swap');
-
+@import url('https://fonts.googleapis.com/css2?family=Exo+2:ital,wght@0,100..900;1,100..900&display=swap');
 :root {
   --accent-color: #4ae1e9;
   --primary-color: #343541;
@@ -21,6 +21,7 @@
   --gap-x-large: 30px;
   --gap-xx-large: 40px;
   --primary-font: 'Open Sans', sans-serif;
+  --robot-font: 'Exo 2', sans-serif;
   --padding-x-small: 5px;
   --padding-small: 10px;
   --padding-medium: 15px;

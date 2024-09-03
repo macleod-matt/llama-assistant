@@ -30,7 +30,7 @@
   background-color: var(--secondary-color);
   padding: var(--padding-medium) var(--padding-large);
   max-width: 50%;
-  border-radius: 30px;
+  border-radius: var(--border-radius-normal);
   margin-left: auto;
   word-wrap: break-word;
 }
@@ -42,14 +42,22 @@
   margin: 0 auto;
 }
 
-.feed li p {
+.feed {
   color: var(--text-color);
   font-size: var(--font-size-medium);
   text-align: left;
   max-width: 100%;
 }
 
+.feed .jarvisMessage p {
+  /* font-size: var(--font-size-large); */
+  font-family: var(--robot-font);
+  line-height: 24px;
+}
+
 .jarvisLabel {
+  font-style: italic;
   font-weight: bold;
   margin-right: var(--padding-small);
+  border-bottom: 0.5px solid var(--accent-color);
 }

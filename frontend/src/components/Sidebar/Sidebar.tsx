@@ -16,17 +16,16 @@ const Sidebar = ({
   handleChatClick,
   currentChat,
 }: SidebarProps) => {
-  console.log('current chat is ', currentChat);
   return (
     <section className={styles.sideBar}>
-      <Button onClick={createNewChat}>+ New Chat</Button>
+      <Button onClick={createNewChat}>New Chat +</Button>
       <ul className={styles.chatHistory}>
         {previousChats?.map((chat, index) => (
           <li
             className={
               currentChat.title === chat.title ? styles.currentChat : ''
             }
-            key={index}
+            key={index + chat.title}
             onClick={() => handleChatClick(chat)}
           >
             {chat.title}

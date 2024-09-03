@@ -6,9 +6,16 @@ interface FormProps {
   onKeyDown: (e: React.KeyboardEvent) => void;
   value: string;
   onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  onMicrophoneClick: (event: React.MouseEvent<HTMLDivElement>) => void;
 }
 
-const Form = ({ onSubmit, onKeyDown, value, onChange }: FormProps) => {
+const Form = ({
+  onSubmit,
+  onKeyDown,
+  value,
+  onChange,
+  onMicrophoneClick,
+}: FormProps) => {
   return (
     <div className={styles.formWrapper}>
       <form
@@ -23,7 +30,7 @@ const Form = ({ onSubmit, onKeyDown, value, onChange }: FormProps) => {
             value={value}
             onChange={onChange}
           />
-          <div className={styles.microphone}>
+          <div className={styles.microphone} onClick={onMicrophoneClick}>
             <svg
               xmlns='http://www.w3.org/2000/svg'
               width='18'
