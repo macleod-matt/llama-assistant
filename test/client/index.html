@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Flask App with SmartAssistant</title>
+    <script>
+        async function submitPrompt(event) {
+            event.preventDefault();
+
+            const prompt = document.getElementById('prompt').value;
+
+            // Send the prompt as JSON to the server
+            const response = await fetch('/get_response', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ prompt: prompt }),
+            });
+
+            // Parse the response JSON
+            const result = await response.json();
+            document.getElementById('response').innerText = result.response;
+        }
+    </script>
+</head>
+<body>
+    <h1>Enter Your Prompt</h1>
+    <form onsubmit="submitPrompt(event)">
+        <label for="prompt">Prompt:</label>
+        <input type="text" id="prompt" name="prompt" required>
+        <button type="submit">Submit</button>
+    </form>
+    <h2>Response:</h2>
+    <p id="response"></p>
+</body>
+</html>
