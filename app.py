@@ -1,9 +1,10 @@
 
 from smartAssistant import SmartAssistant  # Import the custom class
 from flask import Flask, request, jsonify, render_template
+from flask_cors import CORS
 
 app = Flask(__name__)
-
+CORS(app)
 # Initialize the SmartAssistant class
 assistant = SmartAssistant("JARVIS")
 
@@ -25,4 +26,4 @@ def get_response():
     return jsonify({'response': response})
 
 if __name__ == '__main__':
-    app.run(host='0.0.0.0', port=5000)
+    app.run(host='0.0.0.0', port=5597)

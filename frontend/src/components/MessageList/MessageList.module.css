@@ -4,11 +4,14 @@
   justify-content: flex-start;
   width: 100%;
   padding: 0;
-  max-width: 75%;
+  max-width: 1200px;
   overflow: scroll;
   padding: 30px;
   height: 75%;
   gap: var(--gap-xx-large);
+  color: var(--text-color);
+  font-size: var(--font-size-medium);
+  text-align: left;
   -ms-overflow-style: none;
   scrollbar-width: none;
 }
@@ -40,13 +43,6 @@
   background-color: #343541;
   max-width: 75%;
   margin: 0 auto;
-}
-
-.feed {
-  color: var(--text-color);
-  font-size: var(--font-size-medium);
-  text-align: left;
-  max-width: 100%;
 }
 
 .feed .jarvisMessage p {

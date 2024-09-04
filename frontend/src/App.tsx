@@ -20,6 +20,10 @@ export type Chats = Chat[];
 const App: React.FC = () => {
   const fakeChats: Chats = [
     {
+      title: 'New Chat',
+      messages: [],
+    },
+    {
       title: 'Worlds Tallest Building',
       messages: [
         { role: 'user', content: 'What is the worlds tallest building?' },
@@ -61,9 +65,9 @@ const App: React.FC = () => {
     },
   ];
   const [value, setValue] = useState<string>('');
-  const [messages, setMessages] = useState<Message[]>(fakeChats[1].messages);
+  const [messages, setMessages] = useState<Message[]>(fakeChats[0].messages);
   const [previousChats, setPreviousChats] = useState<Chats>(fakeChats);
-  const [currentChat, setCurrentChat] = useState<Chat>(fakeChats[1]);
+  const [currentChat, setCurrentChat] = useState<Chat>(fakeChats[0]);
   const [showOverlay, setShowOverlay] = useState<boolean>(false);
   const [currentChatTitle, setCurrentChatTitle] = useState<string | null>(
     fakeChats[0].title
@@ -92,31 +96,26 @@ const App: React.FC = () => {
   // TODO: Create useEffect that calls getMessages everytime you submit the form
 
   const getMessages = async () => {
-    // const options = {
-    //   method: 'POST',
-    //   body: JSON.stringify({
-    //     message: value,
-    //   }),
-    //   headers: {
-    //     'Content-Type': 'application/json',
-    //   },
-    // };
-    // try {
-    //   // TODO: add loading state here
-    //   const response = await fetch('/get-response', options);
-    //   const data = await response.json();
-    //   if (data.choices && data.choices.length > 0) {
-    //     setMessages(data.choices[0].message);
-    //   } else {
-    //     console.error(
-    //       'Invalid response data: choices array is empty or undefined'
-    //     );
-    //   }
-    // } catch (error) {
-    //   console.error(error);
-    // }
-    // TODO: remove loading state here
-    console.log('Fetch messages from server');
+    try {
+      console.log('messagaes before ', messages);
+      // TODO: add loading state here
+      const response = await fetch('http://localhost:5597/get_response', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ prompt: value }),
+      });
+      const data = await response.json();
+      setMessages([
+        ...messages,
+        { role: 'user', content: value },
+        { role: 'jarvis', content: data.response },
+      ]);
+      //TODO: Add error handling
+    } catch (error) {
+      console.error('Error is ', error);
+    }
   };
 
   const handleKeyDown = (e: React.KeyboardEvent) => {
@@ -147,8 +146,7 @@ const App: React.FC = () => {
   return (
     <div className='app'>
       <Overlay showOverlay={showOverlay} setShowOverlay={setShowOverlay}>
-        {/* <JarvisLogo /> */}
-        <img src='/jarvis-logo.png' />
+        <JarvisLogo />
       </Overlay>
       <Sidebar
         currentChat={currentChat}
